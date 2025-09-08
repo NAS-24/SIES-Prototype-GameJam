@@ -4,6 +4,7 @@ public class BGLoop : MonoBehaviour
 {
     public float scrollSpeed = 2f;
     private float spriteHeight;
+    private bool canScroll = true; // toggle for stopping
 
     // Small overlap to avoid gaps (tweak if needed)
     private float overlapFix = 0.01f;
@@ -17,6 +18,8 @@ public class BGLoop : MonoBehaviour
 
     void Update()
     {
+        if (!canScroll) return; // stops scrolling when false
+
         // Move downward
         transform.Translate(Vector3.down * scrollSpeed * Time.deltaTime);
 
@@ -26,5 +29,10 @@ public class BGLoop : MonoBehaviour
             // Jump above the other background with a tiny overlap
             transform.position += new Vector3(0, (spriteHeight * 2f) - overlapFix, 0);
         }
+    }
+
+    public void StopScrolling()
+    {
+        canScroll = false;
     }
 }

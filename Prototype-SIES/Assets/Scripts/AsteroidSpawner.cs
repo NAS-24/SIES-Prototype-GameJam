@@ -12,9 +12,12 @@ public class AsteroidSpawner : MonoBehaviour
     public float ySpawn = 15f;
 
     private float timer = 0f;
+    private bool canSpawn = true; // control spawning
 
     void Update()
     {
+        if (!canSpawn) return; // stop spawning when disabled
+
         timer += Time.deltaTime;
         if (timer >= 1f / spawnRate)
         {
@@ -47,5 +50,11 @@ public class AsteroidSpawner : MonoBehaviour
 
         // spin
         rb.angularVelocity = Random.Range(-90f, 90f);
+    }
+
+    // Call this when zoom-out starts
+    public void StopSpawning()
+    {
+        canSpawn = false;
     }
 }
